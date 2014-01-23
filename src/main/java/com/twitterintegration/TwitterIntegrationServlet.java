@@ -1,4 +1,4 @@
-package com.example;
+package com.twitterintegration;
 
 import java.io.IOException;
 import java.util.logging.Logger;

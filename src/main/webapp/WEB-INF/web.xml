@@ -12,7 +12,7 @@
     
   <servlet>
     <servlet-name>twitterintegration</servlet-name>
-    <servlet-class>com.example.TwitterIntegrationServlet</servlet-class>
+    <servlet-class>com.twitterintegration.TwitterIntegrationServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>

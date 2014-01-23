@@ -56,7 +56,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
         
         ServletOutputStream output = response.getOutputStream();
         
-        URL url = new URL(getProfileImageURL());        
+        URL url = new URL(profileImageURL);        
         URLConnection urlConnection = url.openConnection();
         
         BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());        
@@ -107,6 +107,4 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		User user = twitter.showUser(handle);		
 		this.profileImageURL = user.getOriginalProfileImageURL();
 	}
-	
-	private String getProfileImageURL() { return this.profileImageURL; }
 }

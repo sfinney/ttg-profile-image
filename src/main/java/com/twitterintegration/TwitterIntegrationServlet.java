@@ -34,8 +34,6 @@ public class TwitterIntegrationServlet extends HttpServlet {
 
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        System.out.println("Hello World!");
 		
 		setTwitterHandle(request.getParameter(REQUEST_PARAMETER));        
         try {
@@ -82,7 +80,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		
 		User user = twitter.showUser(twitterHandle);
 		
-		this.profileImageURL = user.getOriginalProfileImageURL();
+		this.profileImageURL = "SimonJFinney";
 	}
 	
 	public String getProfileImageURL() { return this.profileImageURL; }

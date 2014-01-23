@@ -47,7 +47,9 @@ public class TwitterIntegrationServlet extends HttpServlet {
         
         ServletOutputStream output = response.getOutputStream();
         
-        URL url = new URL(getProfileImageURL());        
+        output.write(request.getQueryString().getBytes());
+        
+        /* URL url = new URL(getProfileImageURL());        
         URLConnection urlConnection = url.openConnection();
         
         BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());        
@@ -58,7 +60,8 @@ public class TwitterIntegrationServlet extends HttpServlet {
         while ((inputStreamLength = bufferedInputStream.read(byteBuffer)) > 0) {
         
         	output.write(byteBuffer, 0, inputStreamLength);
-        }        
+        } */        
+        
         output.flush();
         output.close();
     }

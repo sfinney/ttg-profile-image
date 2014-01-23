@@ -16,21 +16,23 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) throws Exception{
-        String webappDirLocation = "src/main/webapp/";
+    	
+        String directory = "src/main/webapp/";
         
         //The port that we should run on can be set into an environment variable
         //Look for that variable and default to 8080 if it isn't there.
-        String webPort = System.getenv("PORT");
-        if(webPort == null || webPort.isEmpty()) {
-            webPort = "8080";
+        String port = System.getenv("PORT");
+        
+        if (port == null || port.isEmpty()) {
+            port = "8080";
         }
 
-        Server server = new Server(Integer.valueOf(webPort));
+        Server server = new Server(Integer.valueOf(port));
         WebAppContext root = new WebAppContext();
 
         root.setContextPath("/");
-        root.setDescriptor(webappDirLocation+"/WEB-INF/web.xml");
-        root.setResourceBase(webappDirLocation);
+        root.setDescriptor(directory +"/WEB-INF/web.xml");
+        root.setResourceBase(directory);
         
         //Parent loader priority is a class loader setting that Jetty accepts.
         //By default Jetty will behave like most web containers in that it will

@@ -47,7 +47,15 @@
            <groupId>org.twitter4j</groupId>
            <artifactId>twitter4j-core</artifactId>
            <version>[3.0,)</version>
-  		</dependency>	
+  		</dependency>
+  		
+  		<!-- linkedin-j -->
+  		<dependency>
+  			<groupId>com.googlecode.linkedin-j</groupId>
+  			<artifactId>linkedin-j-core</artifactId>
+  			<version>1.0.416</version>
+  			<scope>compile</scope>
+		</dependency>	
     </dependencies>
     <build>    
     	<plugins>

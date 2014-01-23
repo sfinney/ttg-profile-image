@@ -101,7 +101,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		String oAuthUserToken = "aaf71121-02b8-41b6-b049-d232e2222dd7";
 		String oAuthUserSecret = "ab2bc414-5054-4f7d-a419-d1a1e82f0ff6";
 		
-		String URL = "http://api.linkedin.com/v1/people/~/connections:(id,last-name)";
+		String URL = "http://api.linkedin.com/v1/people/~";
 		
 		OAuthService oAuthService = new ServiceBuilder()
 			.provider(LinkedInApi.class)

@@ -16,7 +16,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
 
-public class HelloServlet extends HttpServlet {
+public class TwitterIntegrationServlet extends HttpServlet {
 	
 	private static final String ACCESS_TOKEN = "2291204155-74hZw6tJATnOnGidwlLvMLMCuoI0hv1gHveRaab";
 	private static final String ACCESS_TOKEN_SECRET = "4NL4979d3FQNTIzhsmsorkQ0MzaMhcUi4T9HeNTZhGFvS";
@@ -68,6 +68,5 @@ public class HelloServlet extends HttpServlet {
 	
 	public String getProfileImageURL() { return this.profileImageURL; }
 	
-	public void setTwitterHandle(String twitterHandle) { this.twitterHandle = twitterHandle; } 
-    
+	public void setTwitterHandle(String twitterHandle) { this.twitterHandle = twitterHandle; }    
 }

@@ -11,20 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/* import com.google.code.linkedinapi.client.LinkedInApiClient;
+import com.google.code.linkedinapi.client.LinkedInApiClient;
 import com.google.code.linkedinapi.client.LinkedInApiClientFactory;
-import com.google.code.linkedinapi.schema.Person; */
-
-
-
-
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.LinkedInApi;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Response;
-import org.scribe.model.Token;
-import org.scribe.model.Verb;
-import org.scribe.oauth.OAuthService;
+import com.google.code.linkedinapi.schema.Person;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -74,9 +63,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
         
         ServletOutputStream output = response.getOutputStream();
         
-        output.write(getProfileImageURL().getBytes());
-        
-        /* URL url = new URL(getProfileImageURL());        
+        URL url = new URL(getProfileImageURL());        
         URLConnection urlConnection = url.openConnection();
         
         BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());        
@@ -87,7 +74,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
         while ((inputStreamLength = bufferedInputStream.read(byteBuffer)) > 0) {
         
         	output.write(byteBuffer, 0, inputStreamLength);
-        } */     
+        }  
         
         output.flush();
         output.close();
@@ -100,31 +87,13 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		
 		String oAuthUserToken = "aaf71121-02b8-41b6-b049-d232e2222dd7";
 		String oAuthUserSecret = "ab2bc414-5054-4f7d-a419-d1a1e82f0ff6";
-		
-		String URL = "http://api.linkedin.com/v1/people/~";
-		
-		OAuthService oAuthService = new ServiceBuilder()
-			.provider(LinkedInApi.class)
-			.apiKey(apiKey)
-			.apiSecret(secretKey)
-			.build();		
-		
-		Token accessToken = new Token(oAuthUserToken, oAuthUserSecret);
-		
-		OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, URL);		
-		oAuthService.signRequest(accessToken, oAuthRequest);
-		
-		Response response = oAuthRequest.send();
-		
-		this.profileImageURL = response.getBody();
 
-		/* LinkedInApiClientFactory factory = LinkedInApiClientFactory.newInstance(apiKey, secretKey);
+		LinkedInApiClientFactory factory = LinkedInApiClientFactory.newInstance(apiKey, secretKey);
 		LinkedInApiClient client = factory.createLinkedInApiClient(oAuthUserToken, oAuthUserSecret);
 		
 		Person person = client.getProfileById(handle);
 		
-		this.profileImageURL = person.getPictureUrl(); */
-		
+		this.profileImageURL = person.getPictureUrl();		
 	}
 	
 	private void getTwitterUserDetails() throws TwitterException {

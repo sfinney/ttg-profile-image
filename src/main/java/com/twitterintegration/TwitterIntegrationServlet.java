@@ -1,12 +1,22 @@
 package com.twitterintegration;
 
+import java.awt.BorderLayout;
+import java.awt.Image;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -45,7 +55,27 @@ public class TwitterIntegrationServlet extends HttpServlet {
         
         ServletOutputStream output = response.getOutputStream();
         
-        output.write(getProfileImageURL().getBytes());
+        URL url = new URL(getProfileImageURL());
+        
+        Image image = ImageIO.read(url);
+        
+        JFrame frame = new JFrame();
+        JLabel label = new JLabel(new ImageIcon(image));
+        frame.getContentPane().add(label, BorderLayout.CENTER);
+        frame.pack();
+        frame.setVisible(true);
+        
+        // output.write(image);       
+        
+        /* URLConnection urlConnection = url.openConnection();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream())); */
+        
+        /* while (bufferedReader.read() != null) {
+        	
+        	output.write();        	
+        } */
+        
+        // output.write(getProfileImageURL().getBytes());
         
         output.flush();
         output.close();

@@ -80,7 +80,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		
 		User user = twitter.showUser(twitterHandle);
 		
-		this.profileImageURL = "SimonJFinney";
+		this.profileImageURL = user.getOriginalProfileImageURL();
 	}
 	
 	public String getProfileImageURL() { return this.profileImageURL; }

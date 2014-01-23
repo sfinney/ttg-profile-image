@@ -35,7 +35,9 @@ public class TwitterIntegrationServlet extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        setTwitterHandle(request.getParameter(REQUEST_PARAMETER));        
+        System.out.println("Hello World!");
+		
+		setTwitterHandle(request.getParameter(REQUEST_PARAMETER));        
         try {
         	getTwitterUserDetails();
         	

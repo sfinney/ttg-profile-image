@@ -1,9 +1,7 @@
 package com.twitterintegration;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -49,8 +47,6 @@ public class TwitterIntegrationServlet extends HttpServlet {
         
         output.write(getProfileImageURL().getBytes());
         
-        // output.write("Hello World!".getBytes());
-        
         output.flush();
         output.close();
     }
@@ -66,11 +62,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		TwitterFactory twitterFactory = new TwitterFactory(configuration);
 		Twitter twitter = twitterFactory.getInstance();
 		
-		// Twitter twitter = TwitterFactory.getSingleton();
-		
 		AccessToken accessToken = new AccessToken(ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
-		
-		// twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);	
 		
 		twitter.setOAuthAccessToken(accessToken);
 		

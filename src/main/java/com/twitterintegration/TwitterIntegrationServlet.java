@@ -15,6 +15,8 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
+import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterIntegrationServlet extends HttpServlet {
 	
@@ -55,10 +57,21 @@ public class TwitterIntegrationServlet extends HttpServlet {
 	
 	private void twitterImplementation() throws TwitterException {
 		
-		Twitter twitter = TwitterFactory.getSingleton();
+		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+		configurationBuilder.setOAuthConsumerKey(CONSUMER_KEY);
+		configurationBuilder.setOAuthConsumerSecret(CONSUMER_SECRET);
+		
+		Configuration configuration = configurationBuilder.build();
+		
+		TwitterFactory twitterFactory = new TwitterFactory(configuration);
+		Twitter twitter = twitterFactory.getInstance();
+		
+		// Twitter twitter = TwitterFactory.getSingleton();
 		
 		AccessToken accessToken = new AccessToken(ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
-		twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);		
+		
+		// twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);	
+		
 		twitter.setOAuthAccessToken(accessToken);
 		
 		User user = twitter.showUser(twitterHandle);

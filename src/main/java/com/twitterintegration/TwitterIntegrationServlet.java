@@ -150,7 +150,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		
 		this.profileImageURL = saxParser.parse(response.getBody(), defaultHandler); */
 		
-		this.profileImageURL(response.getBody());
+		this.profileImageURL = (response.getBody());
 	}
 	
 	private void getTwitterUserDetails() throws TwitterException {

@@ -60,7 +60,15 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		
 		this.handle = "http://ie.linkedin.com/pub/simon-finney/60/a0b/574";		
 		
-		getLinkedInUserDetails();
+		try {
+			getLinkedInUserDetails();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
         /* try {
         	getTwitterUserDetails();

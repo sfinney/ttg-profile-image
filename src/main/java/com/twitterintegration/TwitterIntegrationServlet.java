@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /* import com.google.code.linkedinapi.client.LinkedInApiClient;
 import com.google.code.linkedinapi.client.LinkedInApiClientFactory;
 import com.google.code.linkedinapi.schema.Person; */
+
 
 
 import org.scribe.builder.ServiceBuilder;
@@ -52,7 +54,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		
 		// this.handle = request.getParameter(REQUEST_PARAMETER);
 		
-		this.handle = "pub/simon-finney/60/a0b/574";
+		this.handle = URLEncoder.encode("http://ie.linkedin.com/pub/simon-finney/60/a0b/574", "UTF8");
 		
 		getLinkedInUserDetails();
 		

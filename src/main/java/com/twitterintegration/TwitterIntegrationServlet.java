@@ -86,9 +86,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
         
         ServletOutputStream output = response.getOutputStream();
         
-        output.write(profileImageURL.getBytes());
-        
-        /* URL url = new URL(profileImageURL);        
+        URL url = new URL(profileImageURL);        
         URLConnection urlConnection = url.openConnection();
         
         BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());        
@@ -99,7 +97,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
         while ((inputStreamLength = bufferedInputStream.read(byteBuffer)) > 0) {
         
         	output.write(byteBuffer, 0, inputStreamLength);
-        } */
+        }
         
         output.flush();
         output.close();
@@ -140,14 +138,14 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		Document document = documentBuilder.parse(response.getBody());
 		
 		// Normalizes XML	
-		/* document.getDocumentElement().normalize();		
+		document.getDocumentElement().normalize();		
 		NodeList nodeList = document.getElementsByTagName("picture-url");
 		
 		for (int count = 0; count < nodeList.getLength(); count++) {
 			
 			Node node = nodeList.item(count);			
 			this.profileImageURL = node.getTextContent();
-		} */
+		}
 	}
 	
 	private void getTwitterUserDetails() throws TwitterException {

@@ -140,14 +140,14 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		Document document = documentBuilder.parse(response.getBody());
 		
 		// Normalizes XML	
-		document.getDocumentElement().normalize();		
+		/* document.getDocumentElement().normalize();		
 		NodeList nodeList = document.getElementsByTagName("picture-url");
 		
 		for (int count = 0; count < nodeList.getLength(); count++) {
 			
 			Node node = nodeList.item(count);			
 			this.profileImageURL = node.getTextContent();
-		}
+		} */
 	}
 	
 	private void getTwitterUserDetails() throws TwitterException {

@@ -96,7 +96,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		String oAuthUserToken = "aaf71121-02b8-41b6-b049-d232e2222dd7";
 		String oAuthUserSecret = "ab2bc414-5054-4f7d-a419-d1a1e82f0ff6";
 		
-		String url = "http://api.linkedin.com/v1/people/url=" + handle;
+		String url = "http://api.linkedin.com/v1/people/url=" + handle + ":(picture-url)";
 
 		// linkedin-j implementation
 		

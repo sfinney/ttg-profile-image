@@ -52,7 +52,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		
 		// this.handle = request.getParameter(REQUEST_PARAMETER);
 		
-		this.handle = "http://ie.linkedin.com/pub/simon-finney/60/a0b/574";
+		this.handle = "pub/simon-finney/60/a0b/574";
 		
 		getLinkedInUserDetails();
 		

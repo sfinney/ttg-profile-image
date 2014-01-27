@@ -123,7 +123,8 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		
 		DocumentBuilder newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		Document parse = newDocumentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
-		System.out.println(parse.getFirstChild().getTextContent());
+		
+		this.profileImageURL = parse.getFirstChild().getTextContent();
 	}
 	
 	private void getTwitterUserDetails() throws TwitterException {

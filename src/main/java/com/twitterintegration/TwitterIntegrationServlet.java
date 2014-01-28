@@ -12,13 +12,13 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.LinkedInApi;
+import org.scribe.builder.api.TwitterApi;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
@@ -121,14 +121,18 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		Response response = oAuthRequest.send();		
 		String xml = response.getBody();
 		
-		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		Document document = documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
+																.newDocumentBuilder();
 		
-		this.profileImageURL = document.getFirstChild().getTextContent();
+		Document document = documentBuilder.parse(xml);
+		
+		this.profileImageURL = document.getFirstChild()
+									   .getTextContent();
 	}
 	
 	private void getTwitterUserDetails() throws TwitterException {
 		
+		// Twitter4J implementation		
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 		configurationBuilder.setOAuthConsumerKey(CONSUMER_KEY);
 		configurationBuilder.setOAuthConsumerSecret(CONSUMER_SECRET);
@@ -143,6 +147,6 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		twitter.setOAuthAccessToken(accessToken);
 		
 		User user = twitter.showUser(handle);		
-		this.profileImageURL = user.getOriginalProfileImageURL();
+		this.profileImageURL = user.getOriginalProfileImageURL();		
 	}
 }

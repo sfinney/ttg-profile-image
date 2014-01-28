@@ -18,7 +18,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.LinkedInApi;
-import org.scribe.builder.api.TwitterApi;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
@@ -99,7 +98,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
         output.close();
     }
 	
-	private void getLinkedInUserDetails() throws  IOException, ParserConfigurationException, SAXException  {		
+	private void getLinkedInUserDetails() throws  IOException, ParserConfigurationException, SAXException {		
 		
 		String apiKey = "7728b7mz21og75";
 		String secretKey = "lsq6b6rSMQTX9ReG";
@@ -124,7 +123,7 @@ public class TwitterIntegrationServlet extends HttpServlet {
 		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
 																.newDocumentBuilder();
 		
-		Document document = documentBuilder.parse(xml);
+		Document document = documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 		
 		this.profileImageURL = document.getFirstChild()
 									   .getTextContent();

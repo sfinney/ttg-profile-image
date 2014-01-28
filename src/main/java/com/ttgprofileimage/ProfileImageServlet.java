@@ -152,10 +152,7 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		Response response = oAuthRequest.send();
 		
-		JSONObject jsonObject = new JSONObject(response.getBody());		
-		
-		this.profileImageURL = jsonObject.getString("profile_image_url")
-										 .toString();
+		this.profileImageURL = response.getBody();
 		
 		// Twitter4J implementation
 		

@@ -16,6 +16,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.json.JSONObject;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.LinkedInApi;
 import org.scribe.builder.api.TwitterApi;
@@ -151,17 +152,8 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		Response response = oAuthRequest.send();
 		
-		this.profileImageURL = response.getBody();
-		
-		/*String xml = response.getBody();
-		
-		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
-																.newDocumentBuilder();
-		
-		Document document = documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
-		
-		this.profileImageURL = document.getFirstChild()
-									   .getTextContent(); */
+		JSONObject jsonObject = new JSONObject(response.getBody());		
+		this.profileImageURL = jsonObject.getString("profile_image_url");
 		
 		// Twitter4J implementation
 		

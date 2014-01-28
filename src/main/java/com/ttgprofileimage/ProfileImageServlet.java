@@ -67,13 +67,15 @@ public class ProfileImageServlet extends HttpServlet {
 		
 			if (handle.contains("linkedin")) {
 			
+				this.accessToken = "aaf71121-02b8-41b6-b049-d232e2222dd7";
+				this.accessTokenSecret = "ab2bc414-5054-4f7d-a419-d1a1e82f0ff6";
+				
+				this.consumerKey = "7728b7mz21og75";
+				this.consumerSecret = "lsq6b6rSMQTX9ReG";
+				
+				this.url = "http://api.linkedin.com/v1/people/url=" + URLEncoder.encode(handle, "UTF8") + "/picture-urls::(original)";
+				
 				try {
-					
-					this.accessToken = "aaf71121-02b8-41b6-b049-d232e2222dd7";
-					this.accessTokenSecret = "ab2bc414-5054-4f7d-a419-d1a1e82f0ff6";
-					
-					this.consumerKey = "7728b7mz21og75";
-					this.consumerSecret = "lsq6b6rSMQTX9ReG";
 					
 					getLinkedInProfileImage();
 					
@@ -94,6 +96,8 @@ public class ProfileImageServlet extends HttpServlet {
 				
 				this.consumerKey = "hHKbEpoT86DcFwuvZ0B8JQ";
 				this.consumerSecret = "J2LhRTHWlVcVta7E7BFGvZNy0h6ZVcZGFf5d97R0ERI";
+				
+				this.url = "https://api.twitter.com/1.1/users/lookup.json?screen_name=" + handle;
 				
 				// Scribe implementation
 				getTwitterProfileImage();		        
@@ -132,18 +136,13 @@ public class ProfileImageServlet extends HttpServlet {
 	
 	private void getLinkedInProfileImage() throws  IOException, ParserConfigurationException, SAXException {
 		
-		// Scribe implementation
-		url = "http://api.linkedin.com/v1/people/url=" + URLEncoder.encode(handle, "UTF8") + "/picture-urls::(original)";		
-				
+		// Scribe implementation				
 		oAuthService = new ServiceBuilder().provider(LinkedInApi.class)
 														.apiKey(consumerKey)
 														.apiSecret(consumerSecret)
 														.build();
 		
-		oAuthRequest = new OAuthRequest(Verb.GET, url);
-		oAuthService.signRequest(new Token(accessToken, accessTokenSecret), oAuthRequest);
-		
-		response = oAuthRequest.send();		
+		response = getToken(url, oAuthService);	
 		String xml = response.getBody();
 		
 		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
@@ -158,20 +157,14 @@ public class ProfileImageServlet extends HttpServlet {
 	private void getTwitterProfileImage() /* throws TwitterException */ {
 		
 		// Scribe implementation		
-		url = "https://api.twitter.com/1.1/users/lookup.json?screen_name=" + handle;
-		
 		oAuthService = new ServiceBuilder().provider(TwitterApi.class)
-				.apiKey(consumerKey)
-				.apiSecret(consumerSecret)
-				.build();
+										   .apiKey(consumerKey)
+										   .apiSecret(consumerSecret)
+										   .build();
 		
-		oAuthRequest = new OAuthRequest(Verb.GET, url);
-		oAuthService.signRequest(new Token(accessToken, accessTokenSecret), oAuthRequest);
+		response = getToken(url, oAuthService);
 		
-		response = oAuthRequest.send();
-		
-		JSONArray jsonArray = new JSONArray(response.getBody());
-		
+		JSONArray jsonArray = new JSONArray(response.getBody());		
 		JSONObject jsonObject = jsonArray.getJSONObject(0);
 		
 		this.profileImageURL = jsonObject.getString("profile_image_url")
@@ -193,6 +186,15 @@ public class ProfileImageServlet extends HttpServlet {
 		twitter.setOAuthAccessToken(token);
 		
 		User user = twitter.showUser(handle);		
-		this.profileImageURL = user.getOriginalProfileImageURL(); */		
+		this.profileImageURL = user.getOriginalProfileImageURL(); */
+		
+	}
+	
+	private Response getToken(String url, OAuthService oAuthService) {
+		
+		oAuthRequest = new OAuthRequest(Verb.GET, url);
+		oAuthService.signRequest(new Token(accessToken, accessTokenSecret), oAuthRequest);
+		
+		return oAuthRequest.send();
 	}
 }

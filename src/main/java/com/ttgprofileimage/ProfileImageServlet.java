@@ -16,6 +16,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.LinkedInApi;
@@ -152,7 +153,11 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		Response response = oAuthRequest.send();
 		
-		this.profileImageURL = response.getBody();
+		JSONArray jsonArray = new JSONArray(response.getBody());
+		
+		JSONObject jsonObject = jsonArray.toJSONObject(jsonArray);
+		
+		this.profileImageURL = jsonObject.getString("profile_image_url");
 		
 		// Twitter4J implementation
 		

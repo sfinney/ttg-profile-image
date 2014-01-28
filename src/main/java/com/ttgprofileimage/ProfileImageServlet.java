@@ -18,6 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.LinkedInApi;
+import org.scribe.builder.api.TwitterApi;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
@@ -26,13 +27,13 @@ import org.scribe.oauth.OAuthService;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import twitter4j.Twitter;
+/* import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.conf.Configuration;
-import twitter4j.conf.ConfigurationBuilder;
+import twitter4j.conf.ConfigurationBuilder; */
 
 public class ProfileImageServlet extends HttpServlet {
 	
@@ -83,7 +84,9 @@ public class ProfileImageServlet extends HttpServlet {
 	        
 	        ServletOutputStream output = response.getOutputStream();
 	        
-	        URL url = new URL(profileImageURL);        
+	        output.write(profileImageURL.getBytes());
+	        
+	        /* URL url = new URL(profileImageURL);        
 	        URLConnection urlConnection = url.openConnection();
 	        
 	        BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());        
@@ -94,7 +97,7 @@ public class ProfileImageServlet extends HttpServlet {
 	        while ((inputStreamLength = bufferedInputStream.read(byteBuffer)) > 0) {
 	        
 	        	output.write(byteBuffer, 0, inputStreamLength);
-	        }
+	        } */
 	        
 	        output.flush();
 	        output.close();
@@ -109,9 +112,9 @@ public class ProfileImageServlet extends HttpServlet {
 		String oAuthUserToken = "aaf71121-02b8-41b6-b049-d232e2222dd7";
 		String oAuthUserSecret = "ab2bc414-5054-4f7d-a419-d1a1e82f0ff6";
 		
-		String url = "http://api.linkedin.com/v1/people/url=" + URLEncoder.encode(handle, "UTF8") + "/picture-urls::(original)";
-		
-		// Scribe implementation		
+		// Scribe implementation
+		String url = "http://api.linkedin.com/v1/people/url=" + URLEncoder.encode(handle, "UTF8") + "/picture-urls::(original)";		
+				
 		OAuthService oAuthService = new ServiceBuilder().provider(LinkedInApi.class)
 														.apiKey(apiKey)
 														.apiSecret(secretKey)
@@ -132,10 +135,36 @@ public class ProfileImageServlet extends HttpServlet {
 									   .getTextContent();
 	}
 	
-	private void getTwitterUserDetails() throws TwitterException {
+	private void getTwitterUserDetails() {
 		
-		// Twitter4J implementation		
-		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+		// Scribe implementation		
+		String url = "https://api.twitter.com/1.1/users/lookup.json?screen_name=" + handle;
+		
+		OAuthService oAuthService = new ServiceBuilder().provider(TwitterApi.class)
+				.apiKey(CONSUMER_KEY)
+				.apiSecret(CONSUMER_SECRET)
+				.build();
+		
+		OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, url);
+		oAuthService.signRequest(new Token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET), oAuthRequest);
+		
+		Response response = oAuthRequest.send();
+		
+		this.profileImageURL = response.getBody();
+		
+		/*String xml = response.getBody();
+		
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
+																.newDocumentBuilder();
+		
+		Document document = documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
+		
+		this.profileImageURL = document.getFirstChild()
+									   .getTextContent(); */
+		
+		// Twitter4J implementation
+		
+		/* ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 		configurationBuilder.setOAuthConsumerKey(CONSUMER_KEY);
 		configurationBuilder.setOAuthConsumerSecret(CONSUMER_SECRET);
 		
@@ -149,6 +178,6 @@ public class ProfileImageServlet extends HttpServlet {
 		twitter.setOAuthAccessToken(accessToken);
 		
 		User user = twitter.showUser(handle);		
-		this.profileImageURL = user.getOriginalProfileImageURL();		
+		this.profileImageURL = user.getOriginalProfileImageURL(); */		
 	}
 }

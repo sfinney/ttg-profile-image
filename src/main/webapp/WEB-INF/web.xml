@@ -11,12 +11,12 @@
 	</welcome-file-list>
     
   <servlet>
-    <servlet-name>twitterintegration</servlet-name>
-    <servlet-class>com.twitterintegration.TwitterIntegrationServlet</servlet-class>
+    <servlet-name>profileimageservlet</servlet-name>
+    <servlet-class>com.profileimageservlet.ProfileImageServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>twitterintegration</servlet-name>
+    <servlet-name>profileimageservlet</servlet-name>
     <url-pattern>/image</url-pattern>
   </servlet-mapping>
 </web-app>

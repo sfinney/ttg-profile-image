@@ -1,4 +1,4 @@
-package com.profileimageservlet;
+package com.ttgprofileimage;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;

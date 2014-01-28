@@ -12,7 +12,7 @@
     
   <servlet>
     <servlet-name>profileimageservlet</servlet-name>
-    <servlet-class>com.profileimageservlet.ProfileImageServlet</servlet-class>
+    <servlet-class>com.ttgprofileimage.ProfileImageServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>

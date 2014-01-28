@@ -155,7 +155,7 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		JSONArray jsonArray = new JSONArray(response.getBody());
 		
-		JSONObject jsonObject = jsonArray.toJSONObject(jsonArray);
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
 		
 		this.profileImageURL = jsonObject.getString("profile_image_url");
 		

@@ -36,7 +36,7 @@
     
     <init-param>
         <param-name>linkedInURL</param-name>
-        <param-value>http://api.linkedin.com/v1/people/url={handle}/picture-urls::(original)</param-value>
+        <param-value>http://api.linkedin.com/v1/people/url={ handle }/picture-urls::(original)</param-value>
     </init-param>
     
     <!-- Twitter -->
@@ -62,7 +62,7 @@
     
     <init-param>
         <param-name>twitterURL</param-name>
-        <param-value>https://api.twitter.com/1.1/users/lookup.json?screen_name={handle}</param-value>
+        <param-value>https://api.twitter.com/1.1/users/lookup.json?screen_name={ handle }</param-value>
     </init-param>    
   </servlet>
   <servlet-mapping>

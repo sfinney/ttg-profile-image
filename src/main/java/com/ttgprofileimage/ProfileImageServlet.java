@@ -199,12 +199,12 @@ public class ProfileImageServlet extends HttpServlet {
 			String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
 				
 			this.consumerKey = getInitParameter(prefix + "ConsumerKey");
-			this.consumerSecret = getInitParameter(prefix + "linkedInConsumerSecret");
+			this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");
 			
-			this.accessToken = getInitParameter(prefix + "linkedInAccessToken");
-			this.accessTokenSecret = getInitParameter(prefix + "linkedInAccessTokenSecret");
+			this.accessToken = getInitParameter(prefix + "AccessToken");
+			this.accessTokenSecret = getInitParameter(prefix + "AccessTokenSecret");
 			
-			this.url = MessageFormat.format(getInitParameter(prefix + "URL"), handle);			
+			this.url = getInitParameter(prefix + "URL").replace("{ handle }", handle);
 		}
 	}
 	

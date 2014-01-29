@@ -65,6 +65,8 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		this.handle = request.getParameter(REQUEST_PARAMETER);
 		
+		init();
+		
 		if (handle != null) {
 			
 			if (handle.contains("linkedin")) {

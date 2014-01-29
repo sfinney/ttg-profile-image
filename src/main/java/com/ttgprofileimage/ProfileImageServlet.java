@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -68,26 +67,13 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		if (handle != null) {
 			
-			Properties properties = new Properties();
-			properties.load(getServletContext().getResourceAsStream("/WEB-INF/config.properties"));
-			
 			if (handle.contains("linkedin")) {
-			
-				this.consumerKey = properties.getProperty("linkedinconsumerkey");
-				this.consumerSecret = properties.getProperty("linkedinconsumersecret");
 				
-				this.accessToken = properties.getProperty("linkedinaccesstoken");
-				this.accessTokenSecret = properties.getProperty("linkedinaccesstokensecret");
-				
-				/* this.url = properties.getProperty("linkedinurl");
-				
-				this.consumerKey = "7728b7mz21og75";
+				/* this.consumerKey = "7728b7mz21og75";
 				this.consumerSecret = "lsq6b6rSMQTX9ReG";
 				
 				this.accessToken = "aaf71121-02b8-41b6-b049-d232e2222dd7";
-				this.accessTokenSecret = "ab2bc414-5054-4f7d-a419-d1a1e82f0ff6"; */				
-				
-				this.url = "http://api.linkedin.com/v1/people/url=" + URLEncoder.encode(handle, "UTF8") + "/picture-urls::(original)";
+				this.accessTokenSecret = "ab2bc414-5054-4f7d-a419-d1a1e82f0ff6"; */
 				
 				try {
 					
@@ -105,21 +91,11 @@ public class ProfileImageServlet extends HttpServlet {
 				}
 			} else {
 				
-				this.consumerKey = properties.getProperty("twitterconsumerkey");
-				this.consumerSecret = properties.getProperty("twitterconsumersecret");
-				
-				this.accessToken = properties.getProperty("twitteraccesstoken");
-				this.accessTokenSecret = properties.getProperty("twitteraccesstokensecret");
-				
-				/* this.url = properties.getProperty("twitterurl");
-				
-				this.consumerKey = "hHKbEpoT86DcFwuvZ0B8JQ";
+				/* this.consumerKey = "hHKbEpoT86DcFwuvZ0B8JQ";
 				this.consumerSecret = "J2LhRTHWlVcVta7E7BFGvZNy0h6ZVcZGFf5d97R0ERI";
 				
 				this.accessToken = "2291204155-74hZw6tJATnOnGidwlLvMLMCuoI0hv1gHveRaab";
-				this.accessTokenSecret = "4NL4979d3FQNTIzhsmsorkQ0MzaMhcUi4T9HeNTZhGFvS"; */				
-				
-				this.url = "https://api.twitter.com/1.1/users/lookup.json?screen_name=" + handle;
+				this.accessTokenSecret = "4NL4979d3FQNTIzhsmsorkQ0MzaMhcUi4T9HeNTZhGFvS"; */
 				
 				// Scribe implementation
 				getTwitterProfileImage();		        
@@ -210,6 +186,34 @@ public class ProfileImageServlet extends HttpServlet {
 		User user = twitter.showUser(handle);		
 		this.profileImageURL = user.getOriginalProfileImageURL(); */
 		
+	}
+	
+	@Override
+	public void init() throws ServletException {
+		
+		if (handle != null) {
+			
+			if (handle.contains("linkedin")) {				
+				
+				this.consumerKey = getInitParameter("linkedInConsumerKey");
+				this.consumerSecret = getInitParameter("linkedInConsumerSecret");
+				
+				this.accessToken = getInitParameter("linkedInAccessToken");
+				this.accessTokenSecret = getInitParameter("linkedInAccessTokenSecret");
+				
+				this.url = getInitParameter("linkedInURL");
+				
+			} else {
+				
+				this.consumerKey = getInitParameter("twitterConsumerKey");
+				this.consumerSecret = getInitParameter("twitterConsumerSecret");
+				
+				this.accessToken = getInitParameter("twitterAccessToken");
+				this.accessTokenSecret = getInitParameter("twitterAccessTokenSecret");
+				
+				this.url = getInitParameter("twitterURL");
+			}
+		}
 	}
 	
 	private Response getToken(String url, OAuthService oAuthService) {

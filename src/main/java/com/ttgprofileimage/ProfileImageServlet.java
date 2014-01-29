@@ -2,10 +2,13 @@ package com.ttgprofileimage;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.text.MessageFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -156,7 +159,9 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		this.url = getInitParameter(prefix + "URL").replace("{ handle }", handle);
 		
-		if (linkedIn) {
+		getTwitterProfileImage();
+		
+		/* if (linkedIn) {
 			
 			try {
 				
@@ -194,7 +199,7 @@ public class ProfileImageServlet extends HttpServlet {
 	        	error.printStackTrace();
 	        } */
 		
-		}
+		// }
 	}
 	
 	private Response getToken(String url, OAuthService oAuthService) {

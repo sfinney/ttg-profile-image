@@ -79,9 +79,9 @@ public class ProfileImageServlet extends HttpServlet {
 				this.accessToken = properties.getProperty("linkedinaccesstoken");
 				this.accessTokenSecret = properties.getProperty("linkedinaccesstokensecret");
 				
-				this.url = properties.getProperty("linkedinurl");
+				/* this.url = properties.getProperty("linkedinurl");
 				
-				/* this.consumerKey = "7728b7mz21og75";
+				this.consumerKey = "7728b7mz21og75";
 				this.consumerSecret = "lsq6b6rSMQTX9ReG";
 				
 				this.accessToken = "aaf71121-02b8-41b6-b049-d232e2222dd7";
@@ -111,9 +111,9 @@ public class ProfileImageServlet extends HttpServlet {
 				this.accessToken = properties.getProperty("twitteraccesstoken");
 				this.accessTokenSecret = properties.getProperty("twitteraccesstokensecret");
 				
-				this.url = properties.getProperty("twitterurl");
+				/* this.url = properties.getProperty("twitterurl");
 				
-				/* this.consumerKey = "hHKbEpoT86DcFwuvZ0B8JQ";
+				this.consumerKey = "hHKbEpoT86DcFwuvZ0B8JQ";
 				this.consumerSecret = "J2LhRTHWlVcVta7E7BFGvZNy0h6ZVcZGFf5d97R0ERI";
 				
 				this.accessToken = "2291204155-74hZw6tJATnOnGidwlLvMLMCuoI0hv1gHveRaab";

@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.text.MessageFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -194,27 +195,16 @@ public class ProfileImageServlet extends HttpServlet {
 	public void init() throws ServletException {
 		
 		if (handle != null) {
+
+			String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
+				
+			this.consumerKey = getInitParameter(prefix + "ConsumerKey");
+			this.consumerSecret = getInitParameter(prefix + "linkedInConsumerSecret");
 			
-			if (handle.contains("linkedin")) {				
-				
-				this.consumerKey = getInitParameter("linkedInConsumerKey");
-				this.consumerSecret = getInitParameter("linkedInConsumerSecret");
-				
-				this.accessToken = getInitParameter("linkedInAccessToken");
-				this.accessTokenSecret = getInitParameter("linkedInAccessTokenSecret");
-				
-				this.url = getInitParameter("linkedInURL");
-				
-			} else {
-				
-				this.consumerKey = getInitParameter("twitterConsumerKey");
-				this.consumerSecret = getInitParameter("twitterConsumerSecret");
-				
-				this.accessToken = getInitParameter("twitterAccessToken");
-				this.accessTokenSecret = getInitParameter("twitterAccessTokenSecret");
-				
-				this.url = getInitParameter("twitterURL");
-			}
+			this.accessToken = getInitParameter(prefix + "linkedInAccessToken");
+			this.accessTokenSecret = getInitParameter(prefix + "linkedInAccessTokenSecret");
+			
+			this.url = MessageFormat.format(getInitParameter(prefix + "URL"), handle);			
 		}
 	}
 	

@@ -66,9 +66,9 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		this.handle = request.getParameter(REQUEST_PARAMETER);
 		
+		init();
+		
 		if (handle != null) {
-			
-			init();
 			
 	        ServletOutputStream output = response.getOutputStream();
 	        
@@ -159,9 +159,7 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		this.url = getInitParameter(prefix + "URL").replace("{ handle }", handle);
 		
-		getTwitterProfileImage();
-		
-		/* if (linkedIn) {
+		if (linkedIn) {
 			
 			try {
 				
@@ -199,7 +197,7 @@ public class ProfileImageServlet extends HttpServlet {
 	        	error.printStackTrace();
 	        } */
 		
-		// }
+		}
 	}
 	
 	private Response getToken(String url, OAuthService oAuthService) {

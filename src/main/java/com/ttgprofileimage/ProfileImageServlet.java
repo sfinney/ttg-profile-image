@@ -67,11 +67,9 @@ public class ProfileImageServlet extends HttpServlet {
 		this.handle = request.getParameter(REQUEST_PARAMETER);
 		
 		if (handle != null) {
-		
-			Properties properties = new Properties();
-			InputStream inputStream = new FileInputStream("config.properties");
 			
-			properties.load(inputStream);
+			Properties properties = new Properties();
+			properties.load(getServletContext().getResourceAsStream("/WEB-INF/config.properties"));
 			
 			if (handle.contains("linkedin")) {
 			
@@ -83,11 +81,11 @@ public class ProfileImageServlet extends HttpServlet {
 				
 				this.url = properties.getProperty("linkedinurl");
 				
-				this.consumerKey = "7728b7mz21og75";
+				/* this.consumerKey = "7728b7mz21og75";
 				this.consumerSecret = "lsq6b6rSMQTX9ReG";
 				
 				this.accessToken = "aaf71121-02b8-41b6-b049-d232e2222dd7";
-				this.accessTokenSecret = "ab2bc414-5054-4f7d-a419-d1a1e82f0ff6";				
+				this.accessTokenSecret = "ab2bc414-5054-4f7d-a419-d1a1e82f0ff6"; */				
 				
 				this.url = "http://api.linkedin.com/v1/people/url=" + URLEncoder.encode(handle, "UTF8") + "/picture-urls::(original)";
 				
@@ -115,11 +113,11 @@ public class ProfileImageServlet extends HttpServlet {
 				
 				this.url = properties.getProperty("twitterurl");
 				
-				this.consumerKey = "hHKbEpoT86DcFwuvZ0B8JQ";
+				/* this.consumerKey = "hHKbEpoT86DcFwuvZ0B8JQ";
 				this.consumerSecret = "J2LhRTHWlVcVta7E7BFGvZNy0h6ZVcZGFf5d97R0ERI";
 				
 				this.accessToken = "2291204155-74hZw6tJATnOnGidwlLvMLMCuoI0hv1gHveRaab";
-				this.accessTokenSecret = "4NL4979d3FQNTIzhsmsorkQ0MzaMhcUi4T9HeNTZhGFvS";				
+				this.accessTokenSecret = "4NL4979d3FQNTIzhsmsorkQ0MzaMhcUi4T9HeNTZhGFvS"; */				
 				
 				this.url = "https://api.twitter.com/1.1/users/lookup.json?screen_name=" + handle;
 				

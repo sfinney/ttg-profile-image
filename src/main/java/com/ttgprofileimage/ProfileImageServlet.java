@@ -32,8 +32,6 @@ public class ProfileImageServlet extends HttpServlet {
 
 	private static final String REQUEST_PARAMETER = "handle";
 	
-	private boolean isLinkedIn;
-	
 	private String consumerKey;
 	private String consumerSecret;
 	
@@ -53,13 +51,12 @@ public class ProfileImageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		this.handle = request.getParameter(REQUEST_PARAMETER);
-		this.isLinkedIn = handle.contains("linkedin");		
 		
 		init();
 		
 		if (handle != null) {			
 			
-			if (isLinkedIn) {
+			if (handle.contains("linkedin")) {
 				
 				try {
 					
@@ -92,8 +89,7 @@ public class ProfileImageServlet extends HttpServlet {
 	        while ((inputStreamLength = bufferedInputStream.read(byteBuffer)) > 0) {
 	        
 	        	output.write(byteBuffer, 0, inputStreamLength);
-	        }
-	        
+	        }	        
 	        output.flush();
 	        output.close();
 		}
@@ -102,7 +98,7 @@ public class ProfileImageServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 
-		String prefix = isLinkedIn ? "linkedIn" : "twitter";
+		String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
 			
 		this.consumerKey = getInitParameter(prefix + "ConsumerKey");
 		this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");
@@ -121,7 +117,7 @@ public class ProfileImageServlet extends HttpServlet {
 														.build();
 		
 		response = getToken(url, oAuthService);		
-		String xml = response.getBody();
+		String xml = response.getBody();	
 		
 		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
 																.newDocumentBuilder();
@@ -129,7 +125,7 @@ public class ProfileImageServlet extends HttpServlet {
 		Document document = documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 		
 		this.profileImageURL = document.getFirstChild()
-									   .getTextContent();		
+									   .getTextContent();
 	}
 	
 	private void getTwitterProfileImage() {

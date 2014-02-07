@@ -85,13 +85,11 @@ public class ProfileImageServlet extends HttpServlet {
 	        int inputStreamLength;
 	        
 	        BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
-	        
-	        output.write(profileImageURL.getBytes());
-	        
-	        /* while ((inputStreamLength = bufferedInputStream.read(byteBuffer)) > 0) {
+
+	        while ((inputStreamLength = bufferedInputStream.read(byteBuffer)) > 0) {
 	        
 	        	output.write(byteBuffer, 0, inputStreamLength);
-	        } */
+	        }
 	        
 	        output.flush();
 	        output.close();
@@ -122,15 +120,13 @@ public class ProfileImageServlet extends HttpServlet {
 		response = getToken(url, oAuthService);		
 		String xml = response.getBody();
 		
-		this.profileImageURL = xml;
-		
-		/* DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
 																.newDocumentBuilder();
 		
 		Document document = documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 		
 		this.profileImageURL = document.getFirstChild()
-									   .getTextContent(); */
+									   .getTextContent();
 	}
 	
 	private void getTwitterProfileImage() {

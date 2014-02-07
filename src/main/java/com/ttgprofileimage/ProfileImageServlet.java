@@ -52,9 +52,9 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		this.handle = request.getParameter(REQUEST_PARAMETER);
 		
+		init();
+		
 		if (handle != null) {
-			
-			init();
 			
 			if (handle.contains("linkedin")) {
 				
@@ -85,12 +85,11 @@ public class ProfileImageServlet extends HttpServlet {
 	        int inputStreamLength;
 	        
 	        BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
-
+	        
 	        while ((inputStreamLength = bufferedInputStream.read(byteBuffer)) > 0) {
 	        
 	        	output.write(byteBuffer, 0, inputStreamLength);
-	        }
-	        
+	        }	        
 	        output.flush();
 	        output.close();
 		}
@@ -99,15 +98,18 @@ public class ProfileImageServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		
-		String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
+		if (handle != null) {
+
+			String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
+				
+			this.consumerKey = getInitParameter(prefix + "ConsumerKey");
+			this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");
 			
-		this.consumerKey = getInitParameter(prefix + "ConsumerKey");
-		this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");
-		
-		this.accessToken = getInitParameter(prefix + "AccessToken");
-		this.accessTokenSecret = getInitParameter(prefix + "AccessTokenSecret");
-		
-		this.url = getInitParameter(prefix + "URL").replace("{ handle }", handle);
+			this.accessToken = getInitParameter(prefix + "AccessToken");
+			this.accessTokenSecret = getInitParameter(prefix + "AccessTokenSecret");
+			
+			this.url = getInitParameter(prefix + "URL").replace("{ handle }", handle);
+		}
 	}
 	
 	private void getLinkedInProfileImage() throws  IOException, ParserConfigurationException, SAXException {
@@ -118,7 +120,7 @@ public class ProfileImageServlet extends HttpServlet {
 														.build();
 		
 		response = getToken(url, oAuthService);		
-		String xml = response.getBody();
+		String xml = response.getBody();	
 		
 		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
 																.newDocumentBuilder();

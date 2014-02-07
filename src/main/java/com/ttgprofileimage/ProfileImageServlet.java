@@ -45,8 +45,8 @@ public class ProfileImageServlet extends HttpServlet {
 	private OAuthService oAuthService;
 	private OAuthRequest oAuthRequest;	
 	
-	private Response response;
-	
+	private Response response;	
+
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -54,7 +54,7 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		init();
 		
-		if (handle != null) {			
+		if (handle != null) {
 			
 			if (handle.contains("linkedin")) {
 				
@@ -97,16 +97,19 @@ public class ProfileImageServlet extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
+		
+		if (handle != null) {
 
-		String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
+			String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
+				
+			this.consumerKey = getInitParameter(prefix + "ConsumerKey");
+			this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");
 			
-		this.consumerKey = getInitParameter(prefix + "ConsumerKey");
-		this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");
-		
-		this.accessToken = getInitParameter(prefix + "AccessToken");
-		this.accessTokenSecret = getInitParameter(prefix + "AccessTokenSecret");
-		
-		this.url = getInitParameter(prefix + "URL").replace("{ handle }", handle);
+			this.accessToken = getInitParameter(prefix + "AccessToken");
+			this.accessTokenSecret = getInitParameter(prefix + "AccessTokenSecret");
+			
+			this.url = getInitParameter(prefix + "URL").replace("{ handle }", handle);
+		}
 	}
 	
 	private void getLinkedInProfileImage() throws  IOException, ParserConfigurationException, SAXException {

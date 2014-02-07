@@ -52,9 +52,9 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		this.handle = request.getParameter(REQUEST_PARAMETER);
 		
-		init();
-		
 		if (handle != null) {
+			
+			init();
 			
 			if (handle.contains("linkedin")) {
 				
@@ -86,14 +86,31 @@ public class ProfileImageServlet extends HttpServlet {
 	        
 	        BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
 	        
-	        while ((inputStreamLength = bufferedInputStream.read(byteBuffer)) > 0) {
+	        output.write(profileImageURL.getBytes());
+	        
+	        /* while ((inputStreamLength = bufferedInputStream.read(byteBuffer)) > 0) {
 	        
 	        	output.write(byteBuffer, 0, inputStreamLength);
-	        }	        
+	        } */
+	        
 	        output.flush();
 	        output.close();
 		}
     }
+	
+	@Override
+	public void init() throws ServletException {
+		
+		String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
+			
+		this.consumerKey = getInitParameter(prefix + "ConsumerKey");
+		this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");
+		
+		this.accessToken = getInitParameter(prefix + "AccessToken");
+		this.accessTokenSecret = getInitParameter(prefix + "AccessTokenSecret");
+		
+		this.url = getInitParameter(prefix + "URL").replace("{ handle }", handle);
+	}
 	
 	private void getLinkedInProfileImage() throws  IOException, ParserConfigurationException, SAXException {
 					
@@ -103,15 +120,17 @@ public class ProfileImageServlet extends HttpServlet {
 														.build();
 		
 		response = getToken(url, oAuthService);		
-		String xml = response.getBody();	
+		String xml = response.getBody();
 		
-		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
+		this.profileImageURL = xml;
+		
+		/* DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
 																.newDocumentBuilder();
 		
 		Document document = documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 		
 		this.profileImageURL = document.getFirstChild()
-									   .getTextContent();
+									   .getTextContent(); */
 	}
 	
 	private void getTwitterProfileImage() {
@@ -128,23 +147,6 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		this.profileImageURL = jsonObject.getString("profile_image_url")
 										 .replace("_normal", "");		
-	}
-	
-	@Override
-	public void init() throws ServletException {
-		
-		if (handle != null) {
-
-			String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
-				
-			this.consumerKey = getInitParameter(prefix + "ConsumerKey");
-			this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");
-			
-			this.accessToken = getInitParameter(prefix + "AccessToken");
-			this.accessTokenSecret = getInitParameter(prefix + "AccessTokenSecret");
-			
-			this.url = getInitParameter(prefix + "URL").replace("{ handle }", handle);
-		}
 	}
 	
 	private Response getToken(String url, OAuthService oAuthService) {

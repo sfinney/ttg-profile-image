@@ -34,6 +34,8 @@ public class ProfileImageServlet extends HttpServlet {
 
 	private static final String REQUEST_PARAMETER = "handle";
 	
+	private boolean isLinkedIn = false;
+	
 	private String consumerKey;
 	private String consumerSecret;
 	
@@ -54,9 +56,11 @@ public class ProfileImageServlet extends HttpServlet {
 		
 		this.handle = request.getParameter(REQUEST_PARAMETER);
 		
+		this.isLinkedIn = handle.contains("linkedin");
+		
 		init();
 			
-		if (handle.contains("linkedin")) {
+		if (isLinkedIn) {
 			
 			try {
 				
@@ -109,7 +113,7 @@ public class ProfileImageServlet extends HttpServlet {
 				error.printStackTrace();
 			}
 
-			String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
+			String prefix = isLinkedIn ? "linkedIn" : "twitter";
 				
 			this.consumerKey = getInitParameter(prefix + "ConsumerKey");
 			this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");

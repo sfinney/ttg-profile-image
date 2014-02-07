@@ -54,8 +54,7 @@ public class ProfileImageServlet extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		this.handle = request.getParameter(REQUEST_PARAMETER);
-		
+		this.handle = request.getParameter(REQUEST_PARAMETER);		
 		this.isLinkedIn = handle.contains("linkedin");
 		
 		init();

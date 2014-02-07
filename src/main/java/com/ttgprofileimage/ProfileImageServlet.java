@@ -97,19 +97,16 @@ public class ProfileImageServlet extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
-		
-		if (handle != null) {
 
-			String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
-				
-			this.consumerKey = getInitParameter(prefix + "ConsumerKey");
-			this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");
+		String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
 			
-			this.accessToken = getInitParameter(prefix + "AccessToken");
-			this.accessTokenSecret = getInitParameter(prefix + "AccessTokenSecret");
-			
-			this.url = getInitParameter(prefix + "URL").replace("{ handle }", handle);
-		}
+		this.consumerKey = getInitParameter(prefix + "ConsumerKey");
+		this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");
+		
+		this.accessToken = getInitParameter(prefix + "AccessToken");
+		this.accessTokenSecret = getInitParameter(prefix + "AccessTokenSecret");
+		
+		this.url = getInitParameter(prefix + "URL").replace("{ handle }", handle);
 	}
 	
 	private void getLinkedInProfileImage() throws  IOException, ParserConfigurationException, SAXException {

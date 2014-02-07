@@ -32,6 +32,8 @@ public class ProfileImageServlet extends HttpServlet {
 
 	private static final String REQUEST_PARAMETER = "handle";
 	
+	private boolean isLinkedIn;
+	
 	private String consumerKey;
 	private String consumerSecret;
 	
@@ -45,18 +47,19 @@ public class ProfileImageServlet extends HttpServlet {
 	private OAuthService oAuthService;
 	private OAuthRequest oAuthRequest;	
 	
-	private Response response;	
-
+	private Response response;
+	
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		this.handle = request.getParameter(REQUEST_PARAMETER);		
+		this.handle = request.getParameter(REQUEST_PARAMETER);
+		this.isLinkedIn = handle.contains("linkedin");		
 		
-		if (handle != null) {
+		init();
+		
+		if (handle != null) {			
 			
-			init();
-			
-			if (handle.contains("linkedin")) {
+			if (isLinkedIn) {
 				
 				try {
 					
@@ -78,7 +81,9 @@ public class ProfileImageServlet extends HttpServlet {
 			}	        
 	        ServletOutputStream output = response.getOutputStream();
 	        
-	        URL url = new URL(profileImageURL);        
+	       output.write(profileImageURL.getBytes());
+	        
+	        /*  URL url = new URL(profileImageURL);        
 	        URLConnection urlConnection = url.openConnection();
 	        
 	        byte[] byteBuffer = new byte[1024];
@@ -89,7 +94,8 @@ public class ProfileImageServlet extends HttpServlet {
 	        while ((inputStreamLength = bufferedInputStream.read(byteBuffer)) > 0) {
 	        
 	        	output.write(byteBuffer, 0, inputStreamLength);
-	        }	        
+	        } */
+	        
 	        output.flush();
 	        output.close();
 		}
@@ -98,7 +104,7 @@ public class ProfileImageServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 
-		String prefix = handle.contains("linkedin") ? "linkedIn" : "twitter";
+		String prefix = isLinkedIn ? "linkedIn" : "twitter";
 			
 		this.consumerKey = getInitParameter(prefix + "ConsumerKey");
 		this.consumerSecret = getInitParameter(prefix + "ConsumerSecret");
@@ -117,15 +123,18 @@ public class ProfileImageServlet extends HttpServlet {
 														.build();
 		
 		response = getToken(url, oAuthService);		
-		String xml = response.getBody();	
+		String xml = response.getBody();
 		
-		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
+		this.profileImageURL = xml;
+		
+		/* DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance()
 																.newDocumentBuilder();
 		
 		Document document = documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 		
 		this.profileImageURL = document.getFirstChild()
-									   .getTextContent();
+									   .getTextContent(); */
+		
 	}
 	
 	private void getTwitterProfileImage() {

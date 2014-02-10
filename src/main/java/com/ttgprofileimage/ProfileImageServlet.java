@@ -31,10 +31,10 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 public class ProfileImageServlet extends HttpServlet {
-
-	private static final String REQUEST_PARAMETER = "handle";
 	
 	private boolean isLinkedIn = false;
+	
+	private String requestParameter;
 	
 	private String consumerKey;
 	private String consumerSecret;
@@ -54,7 +54,9 @@ public class ProfileImageServlet extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		this.handle = request.getParameter(REQUEST_PARAMETER);		
+		this.requestParameter = getInitParameter("requestParameter");
+		
+		this.handle = request.getParameter(requestParameter);		
 		this.isLinkedIn = handle.contains("linkedin");
 		
 		init();
@@ -98,7 +100,7 @@ public class ProfileImageServlet extends HttpServlet {
     }
 	
 	@Override
-	public void init() throws ServletException {
+	public void init() throws ServletException {		
 		
 		if (handle != null) {
 			

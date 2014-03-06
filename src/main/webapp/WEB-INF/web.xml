@@ -41,7 +41,7 @@
 	    
 	    <init-param>
 	        <param-name>linkedInURL</param-name>
-	        <param-value>http://api.linkedin.com/v1/people/~?secure-urls=true&url={ handle }/picture-urls::(original)</param-value>
+	        <param-value>http://api.linkedin.com/v1/people/url={ handle }/(picture-urls::(original);secure=true)</param-value>
 	    </init-param>
 	    
 	    <!-- Twitter -->
